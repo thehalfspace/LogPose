@@ -19,7 +19,7 @@ Requirements:
 ```bash
 uv sync
 uv venv pyenv
-source .venv/bin/activate
+source pyenv/bin/activate
 uv pip install -r requirements.txt
 ```
 
@@ -33,6 +33,9 @@ python Assets/python-scripts/initialize_vault.py Assets/vault-templates/default_
 
 # Periodically index the backlinks for obsidian
 python Assets/python-scripts/update_index.py --vault_name=MyVault MyVault/
+
+# Create a TODOList.md in 6-Logbook folder. This script will scan all the .md files that are not *INDEX.md, look for the tag #todo, and create a list from the lines that contain the #todo tag. It will ignore the files that contain #ignoretodo, and it will add completed check marks to the lines that contain #done.
+python Assetes/python-scripts/generate_todolist MyVault/
 
 # WIP: backup the obsidian settings and generate visualizations
 python Assets/python-scripts/backup_obsidian_config.py MyVault/ MyVault/0-Assets/config/
