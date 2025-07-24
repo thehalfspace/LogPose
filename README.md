@@ -34,7 +34,10 @@ python Assets/python-scripts/initialize_vault.py Assets/vault-templates/default_
 # Periodically index the backlinks for obsidian
 python Assets/python-scripts/update_index.py --vault_name=MyVault MyVault/
 
-# Create a TODOList.md in 6-Logbook folder. This script will scan all the .md files that are not *INDEX.md, look for the tag #todo, and create a list from the lines that contain the #todo tag. It will ignore the files that contain #ignoretodo, and it will add completed check marks to the lines that contain #done.
+# Create a TODOList.md in 6-Logbook folder. 
+# This script will scan all the .md files that are not *INDEX.md, look for the tag #todo, 
+# and create a list from the lines that contain the #todo tag. It will ignore the files
+# that contain #ignoretodo, and it will add completed check marks to the lines that contain #done.
 python Assetes/python-scripts/generate_todolist MyVault/
 
 # WIP: backup the obsidian settings and generate visualizations
@@ -45,10 +48,6 @@ python Assets/python-scripts/generate_kanban_and_graphs.py MyVault/6-Logbook/tod
 Testing example: run the `initialize_vault.py` script, then open obsidian, and create a few random notes in different subfolders. Then run the `update_index.py` script. You can keep obsidian open while running the `update_index.py` script.
 
 # Features to add:
-- To do list in logbook: a python script to generate and update todo list by:
-    - searching the tag #todo everywhere except for index files. 
-    - adding a backlink to the note where #todo is mentioned for that tag. 
-    - once project is complete, I will manually add tag #done, adjacent to #todo, the python script will search done tag and strikethrough the todo. Alternatively, if a completed task is back again in agenda, the script can mark it undone again.
-    - (Brainstorm a better workflow for this): a python script that will archive the older todolist (e.g., todoarchive-timestamp.md), and copy the unfinished tasks into the current todolist (e.g., todoCurrent.md).
+- (Brainstorm a better workflow for this): a python script that will archive the older todolist (e.g., todoarchive-timestamp.md), and copy the unfinished tasks into the current todolist (e.g., todoCurrent.md).
 
 - Right now I don't have any backup for the vault, only git version control for python. Come up with some vault backup strategy.
