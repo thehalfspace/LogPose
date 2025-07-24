@@ -32,7 +32,7 @@ python Assets/python-scripts/initialize_vault.py Assets/vault-templates/default_
 # Once the above step is done, you can open obsidian and open vault from folder.
 
 # Periodically index the backlinks for obsidian
-python Assets/python-scripts/update_index.py MyVault/
+python Assets/python-scripts/update_index.py --vault_name=MyVault MyVault/
 
 # WIP: backup the obsidian settings and generate visualizations
 python Assets/python-scripts/backup_obsidian_config.py MyVault/ MyVault/0-Assets/config/

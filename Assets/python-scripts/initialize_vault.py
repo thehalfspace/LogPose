@@ -10,9 +10,9 @@ def strip_prefix(name: str) -> str:
     return name.split('-', 1)[-1] if '-' in name else name
 
 
-def create_readme(folder_path: Path, backlink: str = "[[VaultINDEX]]") -> None:
+def create_readme(folder_path: Path, backlink: str) -> None:
     name_stripped = strip_prefix(folder_path.name)
-    readme_name = f"{name_stripped}Index.md"
+    readme_name = f"{name_stripped}INDEX.md"
     readme_path = folder_path / readme_name
     if readme_path.exists():
         print(f"⚠️  Skipping existing index: {readme_path}")
@@ -29,7 +29,7 @@ def create_readme(folder_path: Path, backlink: str = "[[VaultINDEX]]") -> None:
                 continue
             if item.is_dir():
                 sub_name = strip_prefix(item.name)
-                content.append(f"- [[{item.name}/{sub_name}Index|{sub_name}]]\n")
+                content.append(f"- [[{item.name}/{sub_name}INDEX|{sub_name}]]\n")
             else:
                 content.append(f"- [[{item.name}]]\n")
 
@@ -39,26 +39,27 @@ def create_readme(folder_path: Path, backlink: str = "[[VaultINDEX]]") -> None:
         print(f"❌ Failed to create {readme_path}: {e}")
 
 
-def create_vault_index(vault_path: Path, structure: list) -> None:
-    vault_index = vault_path / "VaultINDEX.md"
+def create_vault_index(vault_path: Path, structure: list, vault_name: str) -> None:
+    index_name = f"{vault_name}INDEX.md"
+    vault_index = vault_path / index_name
     if vault_index.exists():
-        print(f"⚠️  Skipping existing VaultINDEX: {vault_index}")
+        print(f"⚠️  Skipping existing vault index: {vault_index}")
         return
 
     try:
-        content = ["# Vault Index\n", "## Sections:\n"]
+        content = [f"# {vault_name} Index\n", "## Sections:\n"]
         seen = set()
         for entry in structure:
             full_name = entry["name"].split("/")[0]
             clean_name = strip_prefix(full_name)
             if full_name not in seen:
                 seen.add(full_name)
-                content.append(f"- [[{full_name}/{clean_name}Index|{clean_name}]]\n")
+                content.append(f"- [[{full_name}/{clean_name}INDEX|{clean_name}]]\n")
 
         vault_index.write_text("".join(content), encoding="utf-8")
         print(f"✅ Created: {vault_index}")
     except Exception as e:
-        print(f"❌ Failed to create VaultINDEX.md: {e}")
+        print(f"❌ Failed to create {index_name}: {e}")
 
 
 def initialize_vault(config_path: Path) -> None:
@@ -91,9 +92,9 @@ def initialize_vault(config_path: Path) -> None:
         except FileExistsError:
             print(f"⚠️  Folder already exists: {folder_path}")
 
-        create_readme(folder_path)
+        create_readme(folder_path, backlink=f"[[{vault_name}INDEX]]")
 
-    create_vault_index(vault_path, structure)
+    create_vault_index(vault_path, structure, vault_name)
 
 
 def main():
