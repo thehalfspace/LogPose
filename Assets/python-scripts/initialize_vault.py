@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sys
 import argparse
@@ -5,19 +6,30 @@ import yaml
 from pathlib import Path
 
 
+def strip_prefix(name: str) -> str:
+    return name.split('-', 1)[-1] if '-' in name else name
+
+
 def create_readme(folder_path: Path, backlink: str = "[[VaultINDEX]]") -> None:
-    readme_path = folder_path / "index.md"
+    name_stripped = strip_prefix(folder_path.name)
+    readme_name = f"{name_stripped}Index.md"
+    readme_path = folder_path / readme_name
     if readme_path.exists():
         print(f"⚠️  Skipping existing index: {readme_path}")
         return
 
     try:
-        content = [f"# {folder_path.name}\n", f"Backlink: {backlink}\n", "## Contents:\n"]
+        content = [
+            f"# {name_stripped}\n",
+            f"Backlink: {backlink}\n",
+            "## Contents:\n"
+        ]
         for item in sorted(folder_path.iterdir()):
-            if item.name == "index.md":
+            if item.name == readme_name:
                 continue
             if item.is_dir():
-                content.append(f"- [[{item.name}/index|{item.name}]]\n")
+                sub_name = strip_prefix(item.name)
+                content.append(f"- [[{item.name}/{sub_name}Index|{sub_name}]]\n")
             else:
                 content.append(f"- [[{item.name}]]\n")
 
@@ -37,10 +49,11 @@ def create_vault_index(vault_path: Path, structure: list) -> None:
         content = ["# Vault Index\n", "## Sections:\n"]
         seen = set()
         for entry in structure:
-            top_level = entry["name"].split("/")[0]
-            if top_level not in seen:
-                seen.add(top_level)
-                content.append(f"- [[{top_level}/index|{top_level}]]\n")
+            full_name = entry["name"].split("/")[0]
+            clean_name = strip_prefix(full_name)
+            if full_name not in seen:
+                seen.add(full_name)
+                content.append(f"- [[{full_name}/{clean_name}Index|{clean_name}]]\n")
 
         vault_index.write_text("".join(content), encoding="utf-8")
         print(f"✅ Created: {vault_index}")
