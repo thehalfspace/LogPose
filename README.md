@@ -3,13 +3,6 @@
 
 A toolkit to create, maintain, and visualize a structured Obsidian vault.
 
-## Scripts
-
-- `Assets/python-scripts/initialize_vault.py`: Create a new vault from YAML structure
-- `Assets/python-scripts/iupdate_index.py`: Update all folder-level readmes with internal links
-- `Assets/python-scripts/ibackup_obsidian_config.py`: Backup Obsidian `.obsidian/*.json` config
-- `Assets/python-scripts/igenerate_kanban_and_graphs.py`: Generate Kanban + task progress graph
-
 ## Setup
 Requirements:
 1. Python (>=3.9)
@@ -23,7 +16,7 @@ source pyenv/bin/activate
 uv pip install -r requirements.txt
 ```
 
-## Usage
+## Scripts (and Usage)
 
 ```bash
 # Create new obsidian vault, you can edit the default_config.yaml to create your own folder structure
