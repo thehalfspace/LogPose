@@ -1,0 +1,12 @@
+vault_name: "MyVault"
+structure:
+  - name: "0-Assets/scripts"
+  - name: "0-Assets/config"
+  - name: "1-Inbox"
+  - name: "2-Completed"
+  - name: "3-Abandoned"
+  - name: "4-Media"
+  - name: "5-Learning"
+  - name: "6-Logbook"
+  - name: "7-Visualizations"
+

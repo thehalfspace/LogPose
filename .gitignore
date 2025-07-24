@@ -1,0 +1,8 @@
+.DS_Store
+MyVault/
+pyenv/
+.obsidian/
+*.md
+!README.md
+.python-version
+uv.lock
