@@ -1,5 +1,5 @@
 # LogPose
-**LogPose** is a command-line toolkit for managing structured [Obsidian](https://obsidian.md) vaults. Inspired by One Piece's Log Pose, it helps you navigate, organize, and automate knowledge management using a powerful Python CLI.
+**LogPose** is a command-line toolkit for managing structured [Obsidian](https://obsidian.md) vaults. Inspired by One Piece's Log Pose, it helps you navigate, organize, and automate knowledge management usingsimple Python CLI.
 
 ## Setup
 Requirements:
@@ -30,8 +30,8 @@ uv pip install -e .
 - 🔨 `init`: Initialize a new vault from a configurable YAML template.
 - 🔁 `update`: Automatically generate backlink-aware index files for each folder.
 - 🗒 `todo`: Aggregate global `#todo` tags across your vault into a checklist.
-- ✅ `kanban`: Generate kanban-style Markdown boards and task completion graphs.
-- 💾 `backup`: Save `.obsidian/*.json` settings to version-controlled backups.
+- ✅ (WIP) `kanban`: Generate kanban-style Markdown boards and task completion graphs.
+- 💾 (WIP) `backup`: Save `.obsidian/*.json` settings to version-controlled backups.
 
 ---
 
@@ -40,8 +40,8 @@ uv pip install -e .
 logpose init vault-templates/default_config.yaml
 logpose update MyVault/ --vault_name MyVault
 logpose todo MyVault/
-logpose kanban MyVault/
-logpose backup MyVault/ MyVault/0-Assets/config/
+logpose kanban MyVault/ # WIP
+logpose backup MyVault/ MyVault/0-Assets/config/    # WIP
 
 ```
 

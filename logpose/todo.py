@@ -46,11 +46,11 @@ def generate_todolist(vault_path: Path, config_path: Path):
         all_todos.extend(extract_todo_lines(file_path, vault_path))
 
     with output_file.open("w", encoding="utf-8") as f:
-        f.write("# 📝 Global TODO List")
+        f.write("# 📝 Global TODO List\n\n")
         if not all_todos:
             f.write("No tasks found.")
         else:
-            f.write("".join(all_todos))
+            f.write("\n".join(all_todos))
     print(f"✅ TODO list written to: {output_file}")
 
 def main():

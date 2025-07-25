@@ -11,9 +11,9 @@ def main():
     init_parser.add_argument("config", type=str, help="Path to the config YAML file")
 
     # Subcommand: update
-    update_parser = subparsers.add_parser("update", help="Update index files")
-    update_parser.add_argument("vault_path", type=str, help="Path to Obsidian vault")
-    update_parser.add_argument("--vault_name", type=str, help="Optional vault name for backlinking")
+    update_parser = subparsers.add_parser("update", help="Update index files in a vault")
+    update_parser.add_argument("vault_path", type=str, help="Path to the Obsidian vault")
+    update_parser.add_argument("--vault_name", type=str, help="Optional name of the vault used in backlinks")
 
     # Subcommand: todo
     todo_parser = subparsers.add_parser("todo", help="Generate global TODO list")
@@ -36,11 +36,12 @@ def main():
     elif args.command == "update":
         update.update_indexes(Path(args.vault_path), args.vault_name or Path(args.vault_path).name)
     elif args.command == "todo":
-        todo.main()
+        config = Path(args.config) if args.config else Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml"
+        todo.generate_todolist(Path(args.vault_path), config)
     elif args.command == "backup":
-        backup.main()
+        backup.backup_config(Path(args.vault_path), Path(args.backup_dir))
     elif args.command == "kanban":
-        kanban.main()
+        kanban.generate_kanban_and_graphs(Path(args.vault_path))
     else:
         parser.print_help()
 
