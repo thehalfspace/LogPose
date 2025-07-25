@@ -4,8 +4,10 @@ import argparse
 import yaml
 from pathlib import Path
 
+
 def strip_prefix(name: str) -> str:
     return name.split("-", 1)[-1] if "-" in name else name
+
 
 def create_readme(folder_path: Path, description: str, backlink: str):
     name_stripped = strip_prefix(folder_path.name)
@@ -18,32 +20,25 @@ def create_readme(folder_path: Path, description: str, backlink: str):
 
     try:
         content = [
-            f"# {name_stripped}
-",
-            f"{description.strip()}
-
-",
-            f"Backlink: {backlink}
-
-",
-            "## Contents:
-"
+            f"# {name_stripped}\n",
+            f"{description.strip()}\n\n",
+            f"Backlink: {backlink}\n\n",
+            "## Contents:\n"
         ]
         for item in sorted(folder_path.iterdir()):
             if item.name == readme_name:
                 continue
             if item.is_dir():
                 sub_name = strip_prefix(item.name)
-                content.append(f"- [[{item.name}/{sub_name}INDEX|{sub_name}]]
-")
+                content.append(f"- [[{item.name}/{sub_name}INDEX|{sub_name}]]\n")
             else:
-                content.append(f"- [[{item.name}]]
-")
+                content.append(f"- [[{item.name}]]\n")
 
         readme_path.write_text("".join(content), encoding="utf-8")
         print(f"✅ Created: {readme_path}")
     except Exception as e:
         print(f"❌ Failed to create {readme_path}: {e}")
+
 
 def create_vault_index(vault_path: Path, structure: list, vault_name: str):
     index_name = f"{vault_name}INDEX.md"
@@ -54,22 +49,20 @@ def create_vault_index(vault_path: Path, structure: list, vault_name: str):
         return
 
     try:
-        content = [f"# {vault_name} Index
-", "## Sections:
-"]
+        content = [f"# {vault_name} Index\n", "## Sections:\n"]
         seen = set()
         for entry in structure:
             full_name = entry["name"].split("/")[0]
             clean_name = strip_prefix(full_name)
             if full_name not in seen:
                 seen.add(full_name)
-                content.append(f"- [[{full_name}/{clean_name}INDEX|{clean_name}]]
-")
+                content.append(f"- [[{full_name}/{clean_name}INDEX|{clean_name}]]\n")
 
         vault_index.write_text("".join(content), encoding="utf-8")
         print(f"✅ Created: {vault_index}")
     except Exception as e:
         print(f"❌ Failed to create {index_name}: {e}")
+
 
 def initialize_vault(config_path: Path):
     if not config_path.exists():
@@ -100,6 +93,7 @@ def initialize_vault(config_path: Path):
         create_readme(folder_path, description, backlink=f"[[{vault_name}INDEX]]")
 
     create_vault_index(vault_path, structure, vault_name)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Initialize an Obsidian vault from a YAML config.")
