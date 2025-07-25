@@ -1,8 +1,25 @@
+# macOS system files
 .DS_Store
+
+# Personal vault (should not be in repo)
 MyVault/
-pyenv/
+MyVault2/
+
+# Obsidian system folder (if any used for testing)
 .obsidian/
+
+# Ignore markdown files except README
 *.md
 !README.md
+
+# Ignore Python/UV environment artifacts
 .python-version
+.venv/
+__pycache__/
+*.pyc
 uv.lock
+
+# VSCode or JetBrains settings (if you use them)
+.vscode/
+.idea/
+

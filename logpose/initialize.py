@@ -97,7 +97,15 @@ def initialize_vault(config_path: Path) -> None:
     create_vault_index(vault_path, structure, vault_name)
 
 
+
 def main():
+    import os
+    default_config_path = Path(__file__).resolve().parent.parent / "vault_templates" / "default_config.yaml"
+    if not os.path.exists(str(default_config_path)):
+        print("❌ default_config.yaml not found.")
+        return
+    sys.argv.append(str(default_config_path)) if len(sys.argv) == 1 else None
+
     parser = argparse.ArgumentParser(
         description="Initialize a structured Obsidian vault from a YAML configuration file."
     )
