@@ -26,20 +26,18 @@ def extract_todo_lines(file_path: Path, vault_path: Path):
         print(f"❌ Error reading {file_path}: {e}")
     return todos
 
-def get_logbook_folder(vault_path: Path, config_path: Path) -> Path:
+def get_todolist_path(vault_path: Path, config_path: Path) -> Path:
     try:
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
-        logbook_rel = next(x["name"] for x in config["structure"] if "Logbook" in x["name"])
-        return vault_path / logbook_rel
+        return vault_path / config["todolist"]["location"]
     except Exception as e:
-        print(f"❌ Failed to read logbook path from config: {e}")
-        return vault_path / "6-Logbook"
+        print(f"❌ Could not determine todolist path from config: {e}")
+        return vault_path / "6-Logbook/TODOList.md"
 
 def generate_todolist(vault_path: Path, config_path: Path):
-    logbook_path = get_logbook_folder(vault_path, config_path)
-    output_file = logbook_path / "TODOList.md"
-    logbook_path.mkdir(parents=True, exist_ok=True)
+    output_file = get_todolist_path(vault_path, config_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     all_todos = []
     for file_path in vault_path.rglob("*.md"):
@@ -63,6 +61,6 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Generate TODOList.md from Obsidian notes.")
     parser.add_argument("vault_path", type=Path, help="Path to your Obsidian vault")
-    parser.add_argument("--config", type=Path, default=Path(__file__).resolve().parent.parent / "vault_templates/default_config.yaml")
+    parser.add_argument("--config", type=Path, default=Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml")
     args = parser.parse_args()
     generate_todolist(args.vault_path, args.config)

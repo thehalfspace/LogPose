@@ -18,6 +18,7 @@ MyVault2/
 __pycache__/
 *.pyc
 uv.lock
+logpose.egg-info/
 
 # VSCode or JetBrains settings (if you use them)
 .vscode/

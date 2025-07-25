@@ -1,11 +1,24 @@
 vault_name: "MyVault"
+
 structure:
   - name: "0-Assets/scripts"
+    description: "Contains automation scripts and helpers for the vault."
   - name: "0-Assets/config"
+    description: "Contains configuration files and backups."
   - name: "1-Inbox"
+    description: "For ongoing and incomplete projects."
   - name: "2-Completed"
+    description: "For completed and finalized projects."
   - name: "3-Abandoned"
+    description: "For projects that were dropped or not finished."
   - name: "4-Media"
+    description: "Contains images, videos, and other media assets."
   - name: "5-Learning"
+    description: "For tutorials, notes, and resources you are learning from."
   - name: "6-Logbook"
+    description: "Scratch notes, daily logs, and TODOList entries."
   - name: "7-Visualizations"
+    description: "Graphs, kanban boards, and data visualizations."
+
+todolist:
+  location: "6-Logbook/TODOList.md"

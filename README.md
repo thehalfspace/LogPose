@@ -1,46 +1,49 @@
-
 # LogPose
-
-A toolkit to create, maintain, and visualize a structured Obsidian vault.
+**LogPose** is a command-line toolkit for managing structured [Obsidian](https://obsidian.md) vaults. Inspired by One Piece's Log Pose, it helps you navigate, organize, and automate knowledge management using a powerful Python CLI.
 
 ## Setup
 Requirements:
 1. Python (>=3.9)
-2. uv
+2. [uv](https://github.com/astral-sh/uv)
 3. Obsidian
 
-```bash
-uv sync
-uv venv pyenv
-source pyenv/bin/activate
-uv pip install -r requirements.txt
+---
+
+## Installation
+```sh
+cd logpose
+
+# Create virtual environment
+uv venv
+
+# Activate environment
+source .venv/bin/activate
+
+# Install CLI
+uv pip install -e .
 ```
 
-## Scripts (and Usage)
+---
 
-```bash
-# Create new obsidian vault, you can edit the default_config.yaml to create your own folder structure
-python Assets/python-scripts/initialize_vault.py Assets/vault-templates/default_config.yaml
+## 📦 Features
 
-# Once the above step is done, you can open obsidian and open vault from folder.
+- 🔨 `init`: Initialize a new vault from a configurable YAML template.
+- 🔁 `update`: Automatically generate backlink-aware index files for each folder.
+- 🗒 `todo`: Aggregate global `#todo` tags across your vault into a checklist.
+- ✅ `kanban`: Generate kanban-style Markdown boards and task completion graphs.
+- 💾 `backup`: Save `.obsidian/*.json` settings to version-controlled backups.
 
-# Periodically index the backlinks for obsidian
-python Assets/python-scripts/update_index.py --vault_name=MyVault MyVault/
+---
 
-# Create a TODOList.md in 6-Logbook folder. 
-# This script will scan all the .md files that are not *INDEX.md, look for the tag #todo, 
-# and create a list from the lines that contain the #todo tag. It will ignore the files
-# that contain #ignoretodo, and it will add completed check marks to the lines that contain #done.
-python Assetes/python-scripts/generate_todolist MyVault/
+## Usage
+```sh
+logpose init vault-templates/default_config.yaml
+logpose update MyVault/ --vault_name MyVault
+logpose todo MyVault/
+logpose kanban MyVault/
+logpose backup MyVault/ MyVault/0-Assets/config/
 
-# WIP: backup the obsidian settings and generate visualizations
-python Assets/python-scripts/backup_obsidian_config.py MyVault/ MyVault/0-Assets/config/
-python Assets/python-scripts/generate_kanban_and_graphs.py MyVault/6-Logbook/todolist.md MyVault/7-Visualizations/kanban.md MyVault/7-Visualizations/progress.png
 ```
 
-Testing example: run the `initialize_vault.py` script, then open obsidian, and create a few random notes in different subfolders. Then run the `update_index.py` script. You can keep obsidian open while running the `update_index.py` script.
+## 📁 Directory Structure
 
-# Features to add:
-- (Brainstorm a better workflow for this): a python script that will archive the older todolist (e.g., todoarchive-timestamp.md), and copy the unfinished tasks into the current todolist (e.g., todoCurrent.md).
-
-- Right now I don't have any backup for the vault, only git version control for python. Come up with some vault backup strategy.
