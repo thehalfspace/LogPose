@@ -33,7 +33,7 @@ def get_todolist_path(vault_path: Path, config_path: Path) -> Path:
         return vault_path / config["todolist"]["location"]
     except Exception as e:
         print(f"❌ Could not determine todolist path from config: {e}")
-        return vault_path / "6-Logbook/TODOList.md"
+        return vault_path / "0-Assets/TODOList.md"
 
 def generate_todolist(vault_path: Path, config_path: Path):
     output_file = get_todolist_path(vault_path, config_path)

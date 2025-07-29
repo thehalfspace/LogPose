@@ -21,4 +21,4 @@ structure:
     description: "Graphs, kanban boards, and data visualizations."
 
 todolist:
-  location: "6-Logbook/TODOList.md"
+  location: "0-Assets/TODOList.md"
