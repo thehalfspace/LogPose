@@ -48,7 +48,7 @@ logpose backup MyVault/ MyVault/0-Assets/config/    # WIP
 
 ## 📸 Screenshots
 <img src="https://github.com/thehalfspace/LogPose/blob/main/Index_Example.png" alt="drawing" width="600"/>
-<img src="https://github.com/thehalfspace/Spear/blob/main/Todo_Example.png" alt="drawing" width="600"/>
+<img src="https://github.com/thehalfspace/LogPose/blob/main/Todo_Example.png" alt="drawing" width="600"/>
 
 ---
 
