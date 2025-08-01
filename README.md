@@ -29,16 +29,16 @@ uv pip install -e .
 
 - 🔨 `init`: Initialize a new vault from a configurable YAML template.
 - 🔁 `update`: Automatically generate backlink-aware index files for each folder.
-- 🗒 `todo`: Aggregate global `#todo` tags across your vault into a checklist.
-- ✅ (WIP) `kanban`: Generate kanban-style Markdown boards and task completion graphs.
-- 💾 (WIP) `backup`: Save `.obsidian/*.json` settings to version-controlled backups.
+- 🗒 `todo`: Aggregate `#todo` tags across your vault into their respective folders. Also generate a global todolist with those todo notes in your vault. 
+- ✅ (WIP incomplete) `kanban`: Generate kanban-style Markdown boards and task completion graphs.
+- 💾 (WIP incomplete) `backup`: Save `.obsidian/*.json` settings to version-controlled backups. Also backup the vault as a submodule in another github repo.
 
 ---
 
 ## Usage
 ```sh
 logpose init vault-templates/default_config.yaml
-logpose update MyVault/ --vault_name MyVault
+logpose update MyVault/ 
 logpose todo MyVault/
 logpose kanban MyVault/ # WIP
 logpose backup MyVault/ MyVault/0-Assets/config/    # WIP
