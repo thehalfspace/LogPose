@@ -16,7 +16,7 @@ def main():
     update_parser.add_argument("--config", type=str, help="Optional config file path to move media")
 
     # Subcommand: todo
-    todo_parser = subparsers.add_parser("todo", help="Generate global TODO list")
+    todo_parser = subparsers.add_parser("todo", help="Generate project-specific TODO lists and dashboard")
     todo_parser.add_argument("vault_path", type=str)
     todo_parser.add_argument("--config", type=str)
 
@@ -37,8 +37,8 @@ def main():
         config_path = Path(args.config) if args.config else Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml"
         update.update_indexes(Path(args.vault_path), config_path=config_path)
     elif args.command == "todo":
-        config = Path(args.config) if args.config else Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml"
-        todo.generate_todolist(Path(args.vault_path), config)
+        config_path = Path(args.config) if args.config else Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml"
+        todo.generate_todolists(Path(args.vault_path), config_path)
     elif args.command == "backup":
         backup.backup_config(Path(args.vault_path), Path(args.backup_dir))
     elif args.command == "kanban":

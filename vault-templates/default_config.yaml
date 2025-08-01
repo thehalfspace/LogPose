@@ -1,5 +1,6 @@
 vault_name: "MyVault"
 
+# Project structure
 structure:
   - name: "0-Assets/scripts"
     description: "Contains automation scripts and helpers for the vault."
@@ -20,9 +21,11 @@ structure:
   - name: "7-Visualizations"
     description: "Graphs, kanban boards, and data visualizations."
 
+# Location of global todolist
 todolist:
   location: "0-Assets/TODOList.md"
 
+# Location of media files
 media:
   images: "4-Media/Images"
   videos: "4-Media/Videos"
