@@ -22,3 +22,7 @@ structure:
 
 todolist:
   location: "0-Assets/TODOList.md"
+
+media:
+  images: "4-Media/Images"
+  videos: "4-Media/Videos"
