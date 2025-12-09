@@ -1,0 +1,35 @@
+vault_name: "LifeOS"
+
+# Project / life structure
+structure:
+  - name: "0-Assets/scripts"
+    description: "Automation scripts and helpers for the LifeOS vault."
+  - name: "0-Assets/config"
+    description: "Configuration notes for LogPose, plugins, and LifeOS."
+  - name: "0-Assets/TODO"
+    description: "Global TODOList and meta-tasks for LifeOS."
+
+  - name: "1-Reading"
+    description: "Reading tracker, bookshelf, and book notes."
+  - name: "2-Fitness"
+    description: "Workout logs, routines, and fitness notes."
+  - name: "3-Cooking"
+    description: "Recipes, meal logs, and cooking notes."
+  - name: "4-Daily"
+    description: "Daily notes, day-level logs, and scratch."
+  - name: "5-Dashboards"
+    description: "Dataview dashboards for reading, fitness, and meals."
+  - name: "6-Media"
+    description: "Images (book covers, meal photos) and other media assets."
+  - name: "7-Archive"
+    description: "Old logs, completed periods, and archived notes."
+
+# Location of global todolist
+todolist:
+  location: "0-Assets/TODO/TODOList.md"
+
+# Location of media files
+media:
+  images: "6-Media/Images"
+  videos: "6-Media/Videos"
+
