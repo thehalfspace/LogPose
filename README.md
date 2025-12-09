@@ -37,7 +37,9 @@ uv pip install -e .
 
 ## Usage
 ```sh
-logpose init vault-templates/default_config.yaml
+# If no path is provided, it will create MyVault in $PWD
+logpose init vault-templates/default_config.yaml --vault_path /path/to/vault
+
 logpose update MyVault/ 
 logpose todo MyVault/
 logpose kanban MyVault/ # WIP

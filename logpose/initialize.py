@@ -83,7 +83,11 @@ def initialize_vault(config_path: Path):
         print("❌ Invalid config format. Expecting 'vault_name' and 'structure'.")
         sys.exit(1)
 
-    vault_path = Path(vault_name)
+    if vault_root is None:
+        vault_path = Path(vault_name)
+    else:
+        vault_path = vault_root / vault_name
+
     vault_path.mkdir(parents=True, exist_ok=True)
 
     for entry in structure:

@@ -9,6 +9,12 @@ def main():
     # Subcommand: init
     init_parser = subparsers.add_parser("init", help="Initialize a new vault")
     init_parser.add_argument("config", type=str, help="Path to the config YAML file")
+    init_parser.add_argument(
+            "--vault_path",
+            "-o",
+            type=str,
+            help=("Optional directory where the vault should go (path: vault_path/vault_name)")
+            )
 
     # Subcommand: update
     update_parser = subparsers.add_parser("update", help="Update index files in a vault")
@@ -32,6 +38,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "init":
+        vault_root = Path(args.vault_path) if args.vault_path else None
         initialize.initialize_vault(Path(args.config))
     elif args.command == "update":
         config_path = Path(args.config) if args.config else Path(__file__).resolve().parent.parent / "vault-templates/default_config.yaml"
