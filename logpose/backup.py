@@ -2,8 +2,11 @@
 import json
 from pathlib import Path
 
+from . import tracking
+
 
 def backup_obsidian_config(vault_path: Path, backup_path: Path):
+    tracking.require_tracked(vault_path, expected_role="vault")
     obsidian_config_dir = vault_path / ".obsidian"
     backup_output = backup_path / "obsidian-config-backup.json"
     config_data = {}

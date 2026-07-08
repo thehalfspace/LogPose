@@ -3,6 +3,8 @@ import re
 from pathlib import Path
 import matplotlib.pyplot as plt
 
+from . import tracking
+
 
 def parse_todo_file(todo_path: Path):
     tasks = []
@@ -55,6 +57,12 @@ def generate_progress_plot(dates, output_path: Path):
     plt.tight_layout()
     plt.savefig(output_path)
     print(f"✅ Plot saved to {output_path}")
+
+
+def generate_kanban_and_graphs(vault_path: Path):
+    tracking.require_tracked(vault_path, expected_role="vault")
+    print("⚠️  kanban is a work in progress; run the kanban module directly "
+          "with a specific TODO file for now (see `python -m logpose.kanban --help`).")
 
 
 def main():

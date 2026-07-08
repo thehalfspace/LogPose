@@ -4,6 +4,8 @@ import argparse
 import yaml
 from pathlib import Path
 
+from . import tracking
+
 
 def strip_prefix(name: str) -> str:
     return name.split("-", 1)[-1] if "-" in name else name
@@ -64,6 +66,29 @@ def create_vault_index(vault_path: Path, structure: list, vault_name: str):
         print(f"❌ Failed to create {index_name}: {e}")
 
 
+def backlink_for(folder_path: Path, vault_path: Path, vault_name: str) -> str:
+    parent = folder_path.parent
+    if parent == vault_path:
+        return f"[[{vault_name}INDEX]]"
+    parent_stripped = strip_prefix(parent.name)
+    return f"[[{parent.name}/{parent_stripped}INDEX]]"
+
+
+def ensure_parent_indexes(folder_path: Path, vault_path: Path, vault_name: str):
+    """Create indexes for intermediate parent folders (e.g. '0-Meta' when only
+    '0-Meta/config' is a structure entry) so vault/section indexes never link
+    to a non-existent INDEX.md."""
+    parents = []
+    current = folder_path.parent
+    while current != vault_path:
+        parents.append(current)
+        current = current.parent
+
+    for parent in reversed(parents):
+        backlink = backlink_for(parent, vault_path, vault_name)
+        create_readme(parent, "No description provided.", backlink=backlink)
+
+
 def initialize_vault(config_path: Path):
     if not config_path.exists():
         print(f"❌ Config file not found: {config_path}")
@@ -84,13 +109,21 @@ def initialize_vault(config_path: Path):
         sys.exit(1)
 
     vault_path = Path(vault_name)
+    vault_existed = vault_path.exists()
     vault_path.mkdir(parents=True, exist_ok=True)
+
+    if vault_existed:
+        tracking.require_tracked(vault_path, expected_role="vault")
+    else:
+        tracking.write_marker(vault_path, role="vault")
 
     for entry in structure:
         folder_path = vault_path / entry["name"]
         folder_path.mkdir(parents=True, exist_ok=True)
+        ensure_parent_indexes(folder_path, vault_path, vault_name)
         description = entry.get("description", "No description provided.")
-        create_readme(folder_path, description, backlink=f"[[{vault_name}INDEX]]")
+        backlink = backlink_for(folder_path, vault_path, vault_name)
+        create_readme(folder_path, description, backlink=backlink)
 
     create_vault_index(vault_path, structure, vault_name)
 

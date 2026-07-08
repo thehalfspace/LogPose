@@ -3,6 +3,8 @@ from pathlib import Path
 import shutil
 import yaml
 
+from . import tracking
+
 def strip_prefix(name: str) -> str:
     return name.split("-", 1)[-1] if "-" in name else name
 
@@ -46,7 +48,9 @@ def update_readme(path: Path, vault_root: Path, vault_index_name: str):
 
 def walk_and_update(vault_path: Path):
     vault_name = vault_path.name
-    for dirpath, _, _ in os.walk(vault_path):
+    # followlinks=True so linked project folders (1-Assets/<project>) get
+    # indexed like any other vault folder.
+    for dirpath, _, _ in os.walk(vault_path, followlinks=True):
         path = Path(dirpath)
         if not path.name.startswith(".") and path.is_dir():
             update_readme(path, vault_path, f"{vault_name}INDEX")
@@ -68,6 +72,8 @@ def move_media_files(vault_path: Path, config_path: Path):
 
     for file_path in vault_path.rglob("*"):
         if file_path.is_file():
+            if tracking.is_under_linked_assets(file_path, vault_path):
+                continue
             ext = file_path.suffix.lower()
             if ext in image_extensions and image_dest not in file_path.parents:
                 shutil.move(str(file_path), str(image_dest / file_path.name))
@@ -77,6 +83,7 @@ def move_media_files(vault_path: Path, config_path: Path):
                 print(f"🎥 Moved video: {file_path.name} → {video_dest}")
 
 def update_indexes(vault_path: Path, config_path: Path = None):
+    tracking.require_tracked(vault_path, expected_role="vault")
     walk_and_update(vault_path)
     if config_path:
         move_media_files(vault_path, config_path)

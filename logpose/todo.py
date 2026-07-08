@@ -3,6 +3,8 @@ import yaml
 import hashlib
 import re
 
+from . import tracking
+
 def is_index_file(path: Path) -> bool:
     return path.name.endswith("INDEX.md")
 
@@ -54,7 +56,9 @@ def parse_existing_todolist(todolist_file: Path):
 def generate_project_todolists(vault_path: Path):
     folder_todo_map = {}
 
-    for file_path in vault_path.rglob("*.md"):
+    # recurse_symlinks=True so #todo tags inside linked project folders
+    # (1-Assets/<project> -> external assets/) are picked up too.
+    for file_path in vault_path.rglob("*.md", recurse_symlinks=True):
         if is_index_file(file_path):
             continue
         if file_path.name.endswith("TODO.md"):
@@ -108,6 +112,7 @@ def generate_dashboard(vault_path: Path, config_path: Path, folder_map: dict):
     print(f"📊 Global Dashboard updated at: {dashboard_path}")
 
 def generate_todolists(vault_path: Path, config_path: Path):
+    tracking.require_tracked(vault_path, expected_role="vault")
     folder_map = generate_project_todolists(vault_path)
     generate_dashboard(vault_path, config_path, folder_map)
 

@@ -1,0 +1,19 @@
+vault_name: "NotesVault"
+
+# Project structure
+# 1-Assets/ holds one folder per external project, each meant to be a symlink
+# to that project's own assets/ folder (Claude notes, research dumps, scratch).
+structure:
+  - name: "0-Meta/config"
+    description: "Contains configuration files and backups for this vault."
+  - name: "1-Assets"
+    description: "One folder per project, symlinked to that project's assets/ folder."
+
+# Location of global todolist
+todolist:
+  location: "0-Meta/TODOList.md"
+
+# Location of media files
+media:
+  images: "0-Meta/Images"
+  videos: "0-Meta/Videos"
