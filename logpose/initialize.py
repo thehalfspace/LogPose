@@ -89,7 +89,7 @@ def ensure_parent_indexes(folder_path: Path, vault_path: Path, vault_name: str):
         create_readme(parent, "No description provided.", backlink=backlink)
 
 
-def initialize_vault(config_path: Path):
+def initialize_vault(config_path: Path, vault_root: Path | None = None):
     if not config_path.exists():
         print(f"❌ Config file not found: {config_path}")
         sys.exit(1)
@@ -108,7 +108,11 @@ def initialize_vault(config_path: Path):
         print("❌ Invalid config format. Expecting 'vault_name' and 'structure'.")
         sys.exit(1)
 
-    vault_path = Path(vault_name)
+    if vault_root is None:
+        vault_path = Path(vault_name)
+    else:
+        vault_path = vault_root / vault_name
+
     vault_existed = vault_path.exists()
     vault_path.mkdir(parents=True, exist_ok=True)
 

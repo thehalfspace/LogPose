@@ -44,8 +44,9 @@ Vaults live outside this repo (e.g. `~/obsidian-vaults/MyVault/`), managed as th
 # One-time: track a project's assets/ folder so it can be linked into a vault
 logpose track ~/2025/projects/batnav/assets --role assets
 
-# Create a vault (auto-tracked with role "vault")
-logpose init vault-templates/default_config.yaml
+# Create a vault (auto-tracked with role "vault"). If --vault_path/-o is
+# omitted, the vault is created as ./<vault_name> in the current directory.
+logpose init vault-templates/default_config.yaml --vault_path ~/obsidian-vaults
 
 # Link the project's assets/ into the vault's 1-Assets/ folder
 logpose link ~/2025/projects/batnav/assets ~/obsidian-vaults/MyVault --as batnav
