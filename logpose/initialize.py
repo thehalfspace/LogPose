@@ -1,5 +1,6 @@
 
 import sys
+import shutil
 import argparse
 import yaml
 from pathlib import Path
@@ -89,6 +90,24 @@ def ensure_parent_indexes(folder_path: Path, vault_path: Path, vault_name: str):
         create_readme(parent, "No description provided.", backlink=backlink)
 
 
+def copy_seed_files(files: list, config_path: Path, vault_path: Path):
+    """Copy files listed under the config's `files:` key into the vault.
+    `from` is relative to the config file, `to` is relative to the vault.
+    Existing files are never overwritten."""
+    for entry in files:
+        src = config_path.parent / entry["from"]
+        dest = vault_path / entry["to"]
+        if not src.is_file():
+            print(f"❌ Seed file not found: {src}")
+            continue
+        if dest.exists():
+            print(f"⚠️  Skipping existing file: {dest}")
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dest)
+        print(f"✅ Copied: {dest}")
+
+
 def initialize_vault(config_path: Path, vault_root: Path | None = None):
     if not config_path.exists():
         print(f"❌ Config file not found: {config_path}")
@@ -120,6 +139,9 @@ def initialize_vault(config_path: Path, vault_root: Path | None = None):
         tracking.require_tracked(vault_path, expected_role="vault")
     else:
         tracking.write_marker(vault_path, role="vault")
+
+    # Seed files go in before indexes are built so they appear in them.
+    copy_seed_files(config.get("files", []), config_path, vault_path)
 
     for entry in structure:
         folder_path = vault_path / entry["name"]

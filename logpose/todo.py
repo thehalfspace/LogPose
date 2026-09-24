@@ -67,7 +67,12 @@ def generate_project_todolists(vault_path: Path):
         parts = rel_path.parts
         if len(parts) < 2:
             continue
-        project_root = vault_path / parts[0] / parts[1]
+        # Notes sitting directly in a section (e.g. 2-Sources/Book.md) are
+        # bucketed under the section itself, not under the file.
+        if len(parts) == 2:
+            project_root = vault_path / parts[0]
+        else:
+            project_root = vault_path / parts[0] / parts[1]
         todos = extract_todo_lines(file_path, vault_path)
         if todos:
             folder_todo_map.setdefault(project_root, []).extend(todos)

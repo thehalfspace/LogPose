@@ -1,0 +1,39 @@
+vault_name: "ReadingVault"
+
+# Reading vault: separates understanding the author (Sources), arguing my own
+# position (Reflections), and tracking how my thinking changes (Journeys).
+# See vault-templates/reading/README.md for setup and workflow.
+structure:
+  - name: "0-Meta/Templates"
+    description: "Note scaffolds for Obsidian's core Templates plugin (Source, Session, Reflection, Journey)."
+  - name: "1-Journeys"
+    description: "One note per continuing inquiry: a guiding question, the reading path, and dated changes of mind."
+  - name: "2-Sources"
+    description: "One note per work read: the author's argument in their terms, dated sessions, quotes with page references."
+  - name: "3-Reflections"
+    description: "One note per defended claim: provisional thesis, argument, strongest objection, what would change my mind."
+  - name: "4-Inbox"
+    description: "Quick captures, stray quotes, and works to read later; process into Sources or Reflections."
+
+# Files copied into the vault on `logpose init` (from: relative to this config,
+# to: relative to the vault). Existing files are never overwritten.
+files:
+  - from: "reading/templates/Source.md"
+    to: "0-Meta/Templates/Source.md"
+  - from: "reading/templates/Session.md"
+    to: "0-Meta/Templates/Session.md"
+  - from: "reading/templates/Reflection.md"
+    to: "0-Meta/Templates/Reflection.md"
+  - from: "reading/templates/Journey.md"
+    to: "0-Meta/Templates/Journey.md"
+  - from: "reading/CLAUDE.md"
+    to: "assets/CLAUDE.md"
+
+# Location of global todolist (reading queue + follow-ups tagged #todo)
+todolist:
+  location: "0-Meta/TODOList.md"
+
+# Location of media files
+media:
+  images: "0-Meta/Media/Images"
+  videos: "0-Meta/Media/Videos"

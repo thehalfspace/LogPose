@@ -12,6 +12,7 @@ MyVault2/
 # Ignore markdown files except README
 *.md
 !README.md
+!vault-templates/*/templates/*.md
 
 # Ignore assets/
 assets/
