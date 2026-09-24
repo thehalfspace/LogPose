@@ -13,6 +13,7 @@ MyVault2/
 *.md
 !README.md
 !vault-templates/*/templates/*.md
+!vault-templates/reading/GettingStarted.md
 
 # Ignore assets/
 assets/

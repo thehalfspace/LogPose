@@ -26,6 +26,8 @@ files:
     to: "0-Meta/Templates/Reflection.md"
   - from: "reading/templates/Journey.md"
     to: "0-Meta/Templates/Journey.md"
+  - from: "reading/GettingStarted.md"
+    to: "GettingStarted.md"
   - from: "reading/CLAUDE.md"
     to: "assets/CLAUDE.md"
 
