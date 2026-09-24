@@ -50,10 +50,11 @@ def walk_and_update(vault_path: Path):
     vault_name = vault_path.name
     # followlinks=True so linked project folders (1-Assets/<project>) get
     # indexed like any other vault folder.
-    for dirpath, _, _ in os.walk(vault_path, followlinks=True):
-        path = Path(dirpath)
-        if not path.name.startswith(".") and path.is_dir():
-            update_readme(path, vault_path, f"{vault_name}INDEX")
+    for dirpath, dirnames, _ in os.walk(vault_path, followlinks=True):
+        # Prune hidden dirs in place so os.walk never descends into them
+        # (e.g. .git/objects, .obsidian/plugins).
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        update_readme(Path(dirpath), vault_path, f"{vault_name}INDEX")
 
 def move_media_files(vault_path: Path, config_path: Path):
     try:
@@ -70,8 +71,11 @@ def move_media_files(vault_path: Path, config_path: Path):
     image_extensions = ['.jpg', '.jpeg', '.png', '.heic', '.gif']
     video_extensions = ['.mp4', '.mov', '.avi', '.mkv']
 
-    for file_path in vault_path.rglob("*"):
-        if file_path.is_file():
+    for dirpath, dirnames, filenames in os.walk(vault_path):
+        # Skip hidden dirs so plugin/theme images in .obsidian or .git are never moved.
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for filename in filenames:
+            file_path = Path(dirpath) / filename
             if tracking.is_under_linked_assets(file_path, vault_path):
                 continue
             ext = file_path.suffix.lower()
